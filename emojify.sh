@@ -121,8 +121,8 @@ ALPHABET[" "]="$SPACE\n$SPACE\n$SPACE\n$SPACE\n$SPACE"
 # Actual execution
 #
 LOWER=${YOUR_TEXT,,}
-echo "Paste this in slack \(^_^)/"
-echo "==========================="
+#echo "Paste this in slack \(^_^)/"
+#echo "==========================="
 TEXT=""
 for i in $(seq 0 $((${#LOWER} - 1))); do
 	TEXT+="${ALPHABET[${LOWER:$i:1}]}\n"
@@ -157,10 +157,9 @@ while [ $COUNTER -lt $(($LENGTH + 1)) ]; do
    fi
 done
 
-printf "$LINE1\n"
-printf "$LINE2\n"
-printf "$LINE3\n"
-printf "$LINE4\n"
-printf "$LINE5\n"
+FINAL="$LINE1\n$LINE2\n$LINE3\n$LINE4\n$LINE5\n"
+printf $FINAL
+#echo "==========================="
 
-echo "==========================="
+json="{\"text\": \"$FINAL\"}"
+#printf $json
