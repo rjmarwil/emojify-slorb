@@ -1,2 +1,2 @@
-require './app'
+require './emojify'
 run Sinatra::Application
