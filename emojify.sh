@@ -121,8 +121,8 @@ ALPHABET[" "]="$SPACE\n$SPACE\n$SPACE\n$SPACE\n$SPACE"
 # Actual execution
 #
 LOWER=${YOUR_TEXT,,}
-#echo "Paste this in slack \(^_^)/"
-#echo "==========================="
+echo "Paste this in slack \(^_^)/"
+echo "==========================="
 TEXT=""
 for i in $(seq 0 $((${#LOWER} - 1))); do
 	TEXT+="${ALPHABET[${LOWER:$i:1}]}\n"
@@ -159,4 +159,4 @@ done
 
 FINAL="$LINE1\n$LINE2\n$LINE3\n$LINE4\n$LINE5\n"
 printf $FINAL
-#echo "==========================="
+echo "==========================="

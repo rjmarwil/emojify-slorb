@@ -5,9 +5,7 @@ require 'json'
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
   script = "./emojify.sh"
-  text = message.split(' ')[0...-1].join(' ').downcase
-  text[0] = ''
-  text[-1] = ''
+  text = message.split(' ')[0...-1].join(' ').downcase.gsub('"','').gsub('"','')
   emoji = message.split.last.downcase
   color=":#{emoji}:"
   space=":blank:"
