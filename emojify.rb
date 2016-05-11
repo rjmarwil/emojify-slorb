@@ -79,15 +79,13 @@ post '/gateway' do
     end
   end
 
-  final = "#{line1}\n#{line2}\n#{line3}\n#{line4}\n#{line5}\n"
+  final = "#{line2}\n#{line3}\n#{line4}\n#{line5}\n#{line1}\n"
 
   case message
     when 'help'
       respond_message "Usage: emojify \"<your_text>\" <emoji>"
-      respond_message "Surround <your_text> with quotes"
     when ''
       respond_message "Usage: emojify \"<your_text>\" <emoji>"
-      respond_message "Surround <your_text> with quotes"
     else
       respond_message "#{final}"
   end
