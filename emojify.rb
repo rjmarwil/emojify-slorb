@@ -10,7 +10,7 @@ post '/gateway' do
   emoji = message.split.last.downcase
   color=":#{emoji}:"
   space=":blank:"
-  pre-text=""
+  pretext=""
 
   alphabet = Hash.new
   alphabet["a"]="#{space}#{color}#{space}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}"
