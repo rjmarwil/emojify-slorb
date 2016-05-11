@@ -6,17 +6,6 @@ require 'json'
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
 
-  case message
-    when 'help'
-      respond_message "Usage: emojify \"<your_text>\" <emoji>"
-      respond_message "Surround <your_text> with quotes"
-    when ''
-      respond_message "Usage: emojify \"<your_text>\" <emoji>"
-      respond_message "Surround <your_text> with quotes"
-    else
-      respond_message "#{final}"
-  end
-
   script = "./emojify.sh"
   text = message.split(' ')[0...-1].join(' ').downcase.gsub('"','').gsub('"','')
   emoji = message.split.last.downcase
@@ -91,6 +80,17 @@ post '/gateway' do
   end
 
   final = "#{line1}\n#{line2}\n#{line3}\n#{line4}\n#{line5}\n"
+
+  case message
+    when 'help'
+      respond_message "Usage: emojify \"<your_text>\" <emoji>"
+      respond_message "Surround <your_text> with quotes"
+    when ''
+      respond_message "Usage: emojify \"<your_text>\" <emoji>"
+      respond_message "Surround <your_text> with quotes"
+    else
+      respond_message "#{final}"
+  end
 end
 
 def respond_message message
