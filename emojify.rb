@@ -10,9 +10,9 @@ post '/gateway' do
 
   case action
     when 'issues'
-      resp = HTTParty.get(repo_url)
-      resp = JSON.parse resp.body
-      respond_message "There are #{resp['open_issues_count']} open issues on #{repo}"
+      # resp = HTTParty.get(repo_url)
+      # resp = JSON.parse resp.body
+      respond_message "Hi"
   end
 end
 
@@ -21,9 +21,9 @@ def respond_message message
   {:text => message}.to_json
 end
 
-script = "./emojify.sh"
-text =
-emoji =
-space =
-
-system("sh #{script} -t \"#{text}\" -e #{emoji} -s #{space}")
+# script = "./emojify.sh"
+# text =
+# emoji =
+# space =
+#
+# system("sh #{script} -t \"#{text}\" -e #{emoji} -s #{space}")
