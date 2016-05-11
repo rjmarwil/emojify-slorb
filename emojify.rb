@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'httparty'
 require 'json'
+require 'shellwords'
 
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
@@ -16,7 +17,7 @@ post '/gateway' do
     script = "./emojify.sh"
     text = message.split(' ')[0...-1].join(' ')
     emoji = message.split.last
-    emoji_text = shell_script(script, text, emoji)
+    emoji_text = bash("#{script} -t #{text} -e #{emoji}")
     respond_message "#{emoji_text}"
   end
 end
@@ -26,6 +27,7 @@ def respond_message message
   {:text => message}.to_json
 end
 
-def shell_script(script, text, emoji)
-  system("sh #{script} -t \"#{text}\" -e #{emoji}")
+def bash(command)
+  escaped_command = Shellwords.escape(command)
+  system "bash -c #{escaped_command}"
 end

@@ -160,6 +160,3 @@ done
 FINAL="$LINE1\n$LINE2\n$LINE3\n$LINE4\n$LINE5\n"
 printf $FINAL
 #echo "==========================="
-
-json="{\"text\": \"$FINAL\"}"
-#printf $json
