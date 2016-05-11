@@ -4,9 +4,6 @@ require 'json'
 
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
-  script = "./emojify.sh"
-  text = message.split(' ')[0...-1].join(' ')
-  emoji = message.split.last
 
   case action
   when 'help'
@@ -15,8 +12,12 @@ post '/gateway' do
   when ''
     respond_message "Usage: emojify \"<your_text>\" <emoji>"
     respond_message "Surround <your_text> with quotes"
-  when not(text.isblank) && not(emoji.isblank)
-    shell_script(script, text, emoji)
+  else
+    script = "./emojify.sh"
+    text = message.split(' ')[0...-1].join(' ')
+    emoji = message.split.last
+    emoji_text = shell_script(script, text, emoji)
+    respond_message "#{emoji_text}"
   end
 end
 
@@ -25,6 +26,6 @@ def respond_message message
   {:text => message}.to_json
 end
 
-def shell_script script text emoji
+def shell_script(script, text, emoji)
   system("sh #{script} -t \"#{text}\" -e #{emoji}")
 end
