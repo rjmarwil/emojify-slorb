@@ -4,15 +4,19 @@ require 'json'
 
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
-
-  action, repo = message.split('_').map {|c| c.strip.downcase }
-  repo_url = "https://api.github.com/repos/#{repo}"
+  script = "./emojify.sh"
+  text = message.split(' ')[0...-1].join(' ')
+  emoji = message.split.last
 
   case action
-    when 'help'
-        respond_message "Usage: emojify \"<your_text>\" <emoji> [<space_emoji>]\nIf space_emoji is left omitted, blank will be used by default."
-    when ''
-        respond_message "Usage: emojify \"<your_text>\" <emoji> [<space_emoji>]\nIf space_emoji is left omitted, blank will be used by default."
+  when 'help'
+    respond_message "Usage: emojify \"<your_text>\" <emoji>"
+    respond_message "Surround <your_text> with quotes"
+  when ''
+    respond_message "Usage: emojify \"<your_text>\" <emoji>"
+    respond_message "Surround <your_text> with quotes"
+  when not(text.isblank) && not(emoji.isblank)
+    shell_script(script, text, emoji)
   end
 end
 
@@ -21,9 +25,6 @@ def respond_message message
   {:text => message}.to_json
 end
 
-# script = "./emojify.sh"
-# text =
-# emoji =
-# space =
-#
-# system("sh #{script} -t \"#{text}\" -e #{emoji} -s #{space}")
+def shell_script script text emoji
+  system("sh #{script} -t \"#{text}\" -e #{emoji}")
+end
