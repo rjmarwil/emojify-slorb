@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 require 'sinatra'
 require 'httparty'
 require 'json'
