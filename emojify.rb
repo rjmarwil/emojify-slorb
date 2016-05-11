@@ -9,10 +9,8 @@ post '/gateway' do
   repo_url = "https://api.github.com/repos/#{repo}"
 
   case action
-    when 'issues'
-      # resp = HTTParty.get(repo_url)
-      # resp = JSON.parse resp.body
-      respond_message "Hi"
+  when 'help'
+      respond_message "Usage: emojify \"<your_text>\" <emoji> [<space_emoji>]\nIf space_emoji is left omitted, blank will be used by default."
   end
 end
 
