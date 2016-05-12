@@ -5,6 +5,9 @@ require 'json'
 
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
+  if message[0] != '"'
+    message = ''
+  end
 
   #Cases to deal with various inputs
   #Put any new code here
@@ -27,7 +30,7 @@ end
 def emojify message
   script = "./emojify.sh"
   text = message.split(' ')[0...-1].join(' ').downcase.gsub('"','').gsub('"','')
-  emoji = message.split.last.downcase
+  emoji = message.split.last.downcase.gsub(':','').gsub(':','')
   color=":#{emoji}:"
   space=":blank:"
   pretext=""
@@ -60,11 +63,26 @@ def emojify message
   alphabet["x"]="#{color}#{space}#{space}#{space}#{color}#{space}\n#{space}#{color}#{space}#{color}#{space}#{space}\n#{space}#{space}#{color}#{space}#{space}#{space}\n#{space}#{color}#{space}#{color}#{space}#{space}\n#{color}#{space}#{space}#{space}#{color}#{space}"
   alphabet["y"]="#{color}#{space}#{space}#{space}#{color}#{space}\n#{space}#{color}#{space}#{color}#{space}#{space}\n#{space}#{space}#{color}#{space}#{space}#{space}\n#{space}#{space}#{color}#{space}#{space}#{space}\n#{space}#{space}#{color}#{space}#{space}#{space}"
   alphabet["z"]="#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{color}#{space}#{space}\n#{color}#{space}#{space}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["1"]="#{space}#{color}#{space}#{space}\n#{color}#{color}#{space}#{space}\n#{space}#{color}#{space}#{space}\n#{space}#{color}#{space}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["2"]="#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{color}#{space}#{space}\n#{color}#{space}#{space}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["3"]="#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["4"]="#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{space}#{color}#{space}"
+  alphabet["5"]="#{color}#{color}#{color}#{space}\n#{color}#{space}#{space}#{space}\n#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["6"]="#{color}#{color}#{color}#{space}\n#{color}#{space}#{space}#{space}\n#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["7"]="#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{space}#{space}#{color}#{space}"
+  alphabet["8"]="#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["9"]="#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
+  alphabet["0"]="#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}"
   alphabet["."]="#{space}#{space}\n#{space}#{space}\n#{space}#{space}\n#{space}#{space}\n#{color}#{space}"
   alphabet[","]="#{space}#{space}#{space}\n#{space}#{space}#{space}\n#{space}#{space}#{space}\n#{space}#{color}#{space}\n#{color}#{space}#{space}"
   alphabet["'"]="#{color}#{space}\n#{color}#{space}\n#{space}#{space}\n#{space}#{space}\n#{space}#{space}"
   alphabet["!"]="#{color}#{space}\n#{color}#{space}\n#{color}#{space}\n#{space}#{space}\n#{color}#{space}"
   alphabet[" "]="#{space}\n#{space}\n#{space}\n#{space}\n#{space}"
+  alphabet[":"]="#{space}#{space}\n#{color}#{space}\n#{space}#{space}\n#{color}#{space}\n#{space}#{space}"
+  alphabet[";"]="#{space}#{space}#{space}\n#{space}#{color}#{space}\n#{space}#{space}#{space}\n#{space}#{color}#{space}\n#{color}#{space}#{space}"
+  alphabet["'"]="#{color}#{space}\n#{color}#{space}\n#{space}#{space}\n#{space}#{space}\n#{space}#{space}"
+  alphabet["~"]="#{space}#{space}#{space}#{space}#{space}\n#{space}#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}#{space}\n#{space}#{space}#{space}#{space}#{space}\n#{space}#{space}#{space}#{space}#{space}"
+  alphabet["="]="#{space}#{space}#{space}#{space}#{space}\n#{space}#{color}#{color}#{color}#{space}\n#{space}#{space}#{space}#{space}#{space}\n#{space}#{color}#{color}#{color}#{space}\n#{space}#{space}#{space}#{space}#{space}"
 
   #Convert text to emoji representation
   (0..(text.length-1)).each do |i|
