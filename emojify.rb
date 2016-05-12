@@ -6,6 +6,25 @@ require 'json'
 post '/gateway' do
   message = params[:text].gsub(params[:trigger_word], '').strip
 
+  #Cases to deal with various inputs
+  #Put any new code here
+  case message
+    when 'help', ''
+      respond_message "Usage: emojify \"<your_text>\" <emoji>"
+    else
+      emoji_message = emojify message
+      respond_message "#{emoji_message}"
+  end
+end
+
+#Convert output to json that Slack recognizes
+def respond_message message
+  content_type :json
+  {:text => message}.to_json
+end
+
+#Convert messages into emoji equivalent
+def emojify message
   script = "./emojify.sh"
   text = message.split(' ')[0...-1].join(' ').downcase.gsub('"','').gsub('"','')
   emoji = message.split.last.downcase
@@ -13,6 +32,7 @@ post '/gateway' do
   space=":blank:"
   pretext=""
 
+  # Create hash of alphabet emoji conversions
   alphabet = Hash.new
   alphabet["a"]="#{space}#{color}#{space}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}\n#{color}#{space}#{color}#{space}\n#{color}#{space}#{color}#{space}"
   alphabet["b"]="#{color}#{color}#{color}#{space}#{space}\n#{color}#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}#{space}\n#{color}#{space}#{space}#{color}#{space}\n#{color}#{color}#{color}#{space}#{space}"
@@ -46,6 +66,7 @@ post '/gateway' do
   alphabet["!"]="#{color}#{space}\n#{color}#{space}\n#{color}#{space}\n#{space}#{space}\n#{color}#{space}"
   alphabet[" "]="#{space}\n#{space}\n#{space}\n#{space}\n#{space}"
 
+  #Convert text to emoji representation
   (0..(text.length-1)).each do |i|
     pretext << "#{alphabet["#{text[i]}"]}\n"
   end
@@ -57,6 +78,7 @@ post '/gateway' do
   line5=""
   counter=1
 
+  #Transpose and join each emoji letter to read from left to right
   while counter < (pretext.lines.count + 1) do
     if ((counter - 1) % 5) == 0
       line1 += pretext.lines[counter-1].gsub("\n", '')
@@ -74,24 +96,10 @@ post '/gateway' do
       line5 += pretext.lines[counter-1].gsub("\n", '')
       counter+=1
     else
-      echo "Something's fucked ¯\\_(ツ)_/¯"
-      fi
+      echo "Something went wrong ¯\\_(ツ)_/¯"
     end
   end
 
   final = "#{line2}\n#{line3}\n#{line4}\n#{line5}\n#{line1}\n"
-
-  case message
-    when 'help'
-      respond_message "Usage: emojify \"<your_text>\" <emoji>"
-    when ''
-      respond_message "Usage: emojify \"<your_text>\" <emoji>"
-    else
-      respond_message "#{final}"
-  end
-end
-
-def respond_message message
-  content_type :json
-  {:text => message}.to_json
+  return final
 end
