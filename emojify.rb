@@ -4,7 +4,7 @@ require 'httparty'
 require 'json'
 
 post '/gateway' do
-  message = params[:text].gsub(params[:trigger_word], '').strip
+  message = params[:text].gsub(params[:trigger_word], '').strip.gsub('“','"').gsub('”', '"')
   if message[0] != '"'
     message = ''
   end
