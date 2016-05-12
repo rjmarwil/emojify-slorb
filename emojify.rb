@@ -100,6 +100,6 @@ def emojify message
     end
   end
 
-  final = "#{line2}\n#{line3}\n#{line4}\n#{line5}\n#{line1}\n"
+  final = "#{line1}\n#{line2}\n#{line3}\n#{line4}\n#{line5}\n"
   return final
 end
