@@ -14,6 +14,20 @@ post '/gateway' do
   case message
     when 'help', ''
       respond_message "Usage: emojify \"<your_text>\" <emoji>"
+    when 'mario',
+      respond_message ":coin::400::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::99::mario-standing:
+:cloud::blank::blank::blank::blank::blank::blank::blank::blank::cloud::blank::blank::blank::blank::blank::blank::cloud:
+:blank::blank::blank::blank::blank::cloud::blank::blank::blank::blank::blank::blank::blank:
+:blank::cloud::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::cloud:
+:blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::cloud::blank::blank::blank::blank::blank::blank::blank::cloud:
+:blank::blank::blank::blank::blank::blank::cloud::blank::blank::blank::blank:
+:blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank::blank:
+:blank::blank::powerup::blank::blank::blank::blank::blank::blank::blank::blank::blank::coin::coin::coin:
+:blank::mario-brick::mario-block::mario-brick::blank::blank::blank::blank::blank::blank::blank::blank::mario-brick::mario-brick::mario-brick:
+:blank::blank::mario-jump::blank::blank::blank:
+:blank::blank::blank::blank::blank:
+:blank::blank::blank::goomba::blank::mario-pipe::blank::blank::blank::blank::blank::blank::1up::blank::blank::goomba:
+:mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground::mario-ground:"
     else
       emoji_message = emojify message
       respond_message "#{emoji_message}"
